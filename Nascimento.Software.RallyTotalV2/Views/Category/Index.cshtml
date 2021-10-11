@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Nascimento.Software.RallyTotal.WebApp.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <h3>@Html.DisplayFor(modelItem => item.CategoryName)</h3>
+            </td>
+            <td style="text-align: right">
+                @Html.ActionLink("Edit", "Edit", new {  id=item.CategoryId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CategoryId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

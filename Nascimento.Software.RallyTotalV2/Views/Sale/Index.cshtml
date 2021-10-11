@@ -1,0 +1,31 @@
+﻿@model Nascimento.Software.RallyTotal.WebApp.Models.SaleModelIndex
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <link rel="stylesheet" href="~/css/Grid.css" />
+
+</head>
+
+<div>
+
+    <section class="grid">
+        @foreach (var item in Model.Sales)
+        {
+        <div>
+            <!--Nome inicial--><h3 class="item_header"> @Html.DisplayFor(modelItem => item.SaleTitle)</h3>
+            <!--Foto--><h4 class="item_content"><img src="~/images/@Model.photos.FirstOrDefault(m => m.PhotoId == item.Photo).PhotoName" class="box" height="150" width="262" asp-append-version="true" /></h4>
+                       <h4 class="item_footer"> € @Html.DisplayFor(modelItem => item.Price)</h4>
+            <!--Pequena descricao--><a class="btn btn-primary" asp-action="Details" asp-route-id="@item.SaleId">Ver mais</a>
+
+
+
+        </div>
+
+        }
+    </section>
+</div>
+
+
+
