@@ -164,6 +164,49 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var saleRepo = new SaleRepository();
+                var sale = saleRepo.GetOne((int)id);
+                if (sale == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    var categoryRepo = new CategoryRepository();
+                    var category = categoryRepo.GetOne(sale.CategoryId);
+                    var photoRepo = new PhotoRepository();
+                    var photo = photoRepo.GetOne(sale.Photo);
+                    var personRepo  = new PersonRepository();
+                    var person = personRepo.GetOne(sale.PersonID);
+
+                    var saleModel = new SaleModelDetails()
+                    {
+                        SaleId = sale.SaleId,
+                        SaleTitle = sale.SaleTitle,
+                        DescriptionSale = sale.DescriptionSale,
+                        Country = sale.Country,
+                        Price = sale.Price,
+                        RegisterDate = sale.RegisterDate.ToShortDateString(),
+                        UpdateDate = sale.UpdateDate.ToShortDateString(),
+                        Photo = photo.PhotoName,
+                        PersonSeller = person.PersonName,
+                        CategoryName = category.CategoryName,
+                    };
+                    return View(saleModel);
+                }
+
+            }
+        }
+
         private string UploadedFile(SaleModel model)
         {
             string uniqueFileName = null;

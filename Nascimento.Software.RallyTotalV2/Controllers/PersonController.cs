@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Nascimento.Software.RallyTotal.WebApp.Models;
 using NascimentoSoftware.RallyTotal.Infraestrutura.Repository;
 using System;
@@ -110,8 +111,14 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
+            var saleRepo = new SaleRepository();
             if (id == null)
             {
+                return NotFound();
+            }
+            else if(saleRepo.SellerExists((int)id) >= 1)
+            {
+             
                 return NotFound();
             }
             else

@@ -16,6 +16,19 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             var connection = $@"Server=DESKTOP-2L16HEL\SQLEXPRESS;Database=RallyWorld;Trusted_Connection=True;MultipleActiveResultSets=true";
             return connection;
         }
+        public int SellerExists(int PersonId)
+        {
+            int exists = 0;
+            var param = new DynamicParameters();
+            var query = "SELECT COUNT(SaleId) from SALE where PersonId = @PersonId";
+            param.Add("PersonId", PersonId);
+            using(var sql = new SqlConnection(GetConnection()))
+            {
+                exists = (int)sql.ExecuteScalar(query, param: param, commandType: System.Data.CommandType.Text);
+            }
+
+            return exists;
+        }
         public int Add(Sale objeto)
         {
             int rows = 0;
@@ -97,7 +110,7 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
         {
             var sale = new Sale();
             var param = new DynamicParameters();
-            var query = $@"SELECT SaleTitle, SaleId, RegisterDate, UpdateDate, Country, Price, PersonId, CategoryId
+            var query = $@"SELECT SaleTitle, SaleId, RegisterDate, UpdateDate, Country, Price, PersonId, CategoryId,
                 Photo, DescriptionSale FROM SALE where SaleId = @Id";
             param.Add("Id", id);
             using(var sql = new SqlConnection(GetConnection()))

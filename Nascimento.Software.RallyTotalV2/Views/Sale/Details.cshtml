@@ -1,0 +1,40 @@
+﻿@model Nascimento.Software.RallyTotal.WebApp.Models.SaleModelDetails
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<section>
+    <div>
+        <h3 style="text-align: left">@Html.DisplayFor(model => model.SaleTitle)</h3>
+        <h4 style="text-align: left">€@Html.DisplayFor(model => model.Price)</h4>
+        <h5>@Html.DisplayFor(model => model.CategoryName)</h5>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img src="~/images/@Model.Photo" height="555" width="800">
+        </div>
+        <div class="col">
+            @Html.Raw(Model.DescriptionSale)
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col">Register Date: @Html.DisplayFor(model => model.RegisterDate)</div>
+        <div class="col">Last update date: @Html.DisplayFor(model => model.UpdateDate)</div>
+    </div>
+    <div class="row">
+        <div class="col"><b>Seller: @Html.DisplayFor(model => model.PersonSeller)</b></div>
+        <div class="col"><b>Country: @Html.DisplayFor(model => model.Country)</b></div>
+    </div>
+
+</section>
+
+<br />
+<br />
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SaleId }) |
+    <a asp-action="Index">Back to List</a>
+</div>
