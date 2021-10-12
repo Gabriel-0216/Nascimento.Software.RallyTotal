@@ -18,7 +18,23 @@ Grid with all sales available
 
 Also, before creating a sale you must create a car category and a person (Seller)
 
-
 ToDo: Sale -> Details/Delete/Edit
 
 News Portal coming soon
+
+
+V2:
+
+Details page
+<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/003_Details.PNG">
+
+Major changes: 
+- You can't delete a person if he have an active sale.
+- Details page
+- Improvements to grid details
+
+
+ToDo:
+Sale -> Details/Edit
+Improvements on home page
+
