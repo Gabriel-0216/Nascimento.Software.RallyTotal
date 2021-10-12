@@ -3,7 +3,7 @@
 
 A simple project just for learning and improving .NET skills. I created the database and tables by hand, and used Dapper to access it
 
-The main goal of this project is to create a E-WRC market clone https://www.ewrc-market.com/   plus a Rally news Portal, like DirtFish
+The main goal is to create an E-WRC market clone https://www.ewrc-market.com/   plus a Rally news Portal, like DirtFish
 
 In this first commit the user can create a sale and see all cars available to buy
 
