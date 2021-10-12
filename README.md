@@ -36,5 +36,6 @@ Major changes:
 
 ToDo:
 Sale -> Details/Edit
+Category -> Block a delete if any active sale use it
 Improvements on home page
 
