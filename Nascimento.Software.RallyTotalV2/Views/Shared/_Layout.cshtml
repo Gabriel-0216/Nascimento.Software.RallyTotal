@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] Portal Rally Total</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/imgs.css" />
 </head>
 <body>
     <header>
@@ -42,11 +45,21 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Nascimento.Software.RallyTotalV2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Footer -->
+    <footer class="page-footer font-small cyan darken-3">
+        <!-- Footer Elements -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            <a href="http://www.facebook.com.br" target="_blank"><img id="img-facebook" src="~/videos/icons/fb.png" /></a>
+            <a href="https://github.com/Gabriel-0216" target="_blank"><img id="img-git" src="~/videos/icons/git.png" /></a>
+            <img id="img-twitter" src="~/videos/icons/twitter.png" />
+            <img id="img-youtube" src="~/videos/icons/yt.png" />
         </div>
+        <!-- Copyright -->
+
     </footer>
+    <!-- Footer -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -132,7 +132,7 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
         {
             int rows = 0;
             var param = new DynamicParameters();
-            var query = $@"UPDATE SALE SET SaleTitle = @Title, UpdateDate = @UpdateDate, Country = @Country, Price = @Price, PersonId = @PersonId, CategoryId = @CategoryId
+            var query = $@"UPDATE SALE SET SaleTitle = @Title, UpdateDate = @UpdateDate, Country = @Country, Price = @Price, PersonId = @PersonId, CategoryId = @CategoryId,
                            Photo = @Photo, DescriptionSale = @Description WHERE SaleId = @Id";
             param.Add("UpdateDate", objeto.UpdateDate);
             param.Add("Title", objeto.SaleTitle);

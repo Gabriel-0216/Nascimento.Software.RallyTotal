@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Nascimento.Software.RallyTotalV2/Data/Migrations
+/Nascimento.Software.RallyTotalV2/wwwroot/css
+/Nascimento.Software.RallyTotalV2/wwwroot/images/8125706c-b48a-4f2c-baf7-8a202d8d0ee4_hyundaiI20Agua.jpg
+/Nascimento.Software.RallyTotalV2/wwwroot/src

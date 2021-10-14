@@ -3,12 +3,27 @@
     ViewData["Title"] = "AboutUs";
 }
 
-<h1>Quem somos?</h1>
+<html>
+<head>
+</head>
+<body>
 
+    <section>
+        <iframe id="github-iframe" src=""></iframe>
+    </section>
+    
+    <script>
+        fetch('https://api.github.com/repos/Gabriel-0216/Gabriel-0216/contents/README.md')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                var iframe = document.getElementById('github-iframe');
+                iframe.src = 'data:text/html;base64,' + encodeURIComponent(data['content']);
+            });
+    </script>
+    <br />
+    <hr />
 
-<section>
-    <div>
-        <img src="~/videos/yarisWRCnoite.jpg" />
-    </div>
-</section>
+</body>
 
+</html>

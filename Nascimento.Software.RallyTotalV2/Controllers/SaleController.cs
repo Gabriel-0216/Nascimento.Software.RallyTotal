@@ -87,13 +87,45 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var saleViewModel = RetunViewModel();
+            //SaleViewModel saleViewModel = new SaleViewModel();
+            //var categories = new CategoryRepository().GetAll();
+            //var vendors = new PersonRepository().GetAll();
+            //var listaCategorias = new List<Category>();
+            //var listaPessoas = new List<Person>();
+
+            //foreach(var item in categories)
+            //{
+            //    listaCategorias.Add(new Category
+            //    {
+            //        CategoryId = item.CategoryId,
+            //        CategoryName = item.CategoryName
+            //    });
+            //}
+            //foreach(var item in vendors)
+            //{
+            //    listaPessoas.Add(new Person
+            //    {
+            //        PersonId = item.PersonId,
+            //        PersonName = item.PersonName,
+            //    });
+            //}
+
+            //saleViewModel.Categories = listaCategorias;
+            //saleViewModel.People = listaPessoas;
+
+            return View(saleViewModel);
+        }
+
+        public SaleViewModel RetunViewModel()
+        {
             SaleViewModel saleViewModel = new SaleViewModel();
             var categories = new CategoryRepository().GetAll();
             var vendors = new PersonRepository().GetAll();
             var listaCategorias = new List<Category>();
             var listaPessoas = new List<Person>();
 
-            foreach(var item in categories)
+            foreach (var item in categories)
             {
                 listaCategorias.Add(new Category
                 {
@@ -101,7 +133,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     CategoryName = item.CategoryName
                 });
             }
-            foreach(var item in vendors)
+            foreach (var item in vendors)
             {
                 listaPessoas.Add(new Person
                 {
@@ -112,8 +144,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
             saleViewModel.Categories = listaCategorias;
             saleViewModel.People = listaPessoas;
-
-            return View(saleViewModel);
+            return saleViewModel;
         }
 
         [HttpPost]
@@ -236,8 +267,80 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                 return RedirectToAction(nameof(Index));
         }
 
-     
-      
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            var saleRepo = new SaleRepository();
+            var sale = saleRepo.GetOne((int)id);
+            if (id == null || sale == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var saleViewModel = RetunViewModel();
+                saleViewModel.CategoryId = sale.CategoryId;
+                saleViewModel.PersonID = sale.PersonID;
+                saleViewModel.Price = sale.Price;
+                saleViewModel.PersonID = sale.PersonID;
+                saleViewModel.SaleId = sale.SaleId;
+                saleViewModel.UpdateDate = sale.UpdateDate;
+                saleViewModel.RegisterDate = sale.RegisterDate;
+                saleViewModel.DescriptionSale = sale.DescriptionSale;
+                saleViewModel.Country = sale.Country;
+                saleViewModel.SaleTitle = sale.SaleTitle;
+                return View(saleViewModel);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit(SaleModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var saleRepo = new SaleRepository();
+                var viewModel = new SaleModel()
+                {
+                    SaleId = model.SaleId,
+                    PersonID = model.PersonID,
+                    CategoryId = model.CategoryId,
+                    DescriptionSale = model.DescriptionSale,
+                    Country = model.Country,
+                    RegisterDate = model.RegisterDate,
+                    UpdateDate = model.UpdateDate,
+                    Price = model.Price,
+                    SaleTitle = model.SaleTitle,
+                    Photo = model.Photo,
+                };
+                string uniqueFileName = UploadedFile(viewModel);
+
+                var photoRepo = new PhotoRepository();
+                var photoInfra = new NascimentoSoftware.RallyTotal.Infraestrutura.Models.Photo
+                {
+                    PhotoName = uniqueFileName,
+                };
+                photoRepo.Add(photoInfra);
+                var id = photoRepo.SearchFileName(uniqueFileName);
+                var sale = new NascimentoSoftware.RallyTotal.Infraestrutura.Models.Sale()
+                {
+                    SaleId = model.SaleId,
+                    SaleTitle = model.SaleTitle,
+                    RegisterDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    Country = model.Country,
+                    Price = model.Price,
+                    PersonID = model.PersonID,
+                    CategoryId = model.CategoryId,
+                    Photo = id,
+                    DescriptionSale = model.DescriptionSale
+                };
+                saleRepo.Update(sale);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
         private string UploadedFile(SaleModel model)
         {
             string uniqueFileName = null;
