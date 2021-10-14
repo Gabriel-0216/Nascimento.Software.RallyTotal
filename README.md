@@ -23,7 +23,7 @@ News Portal coming soon
 V2:
 
 Details page
-<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/003_Details.PNG">
+<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotal/blob/master/ImagesFolder/003_Details.PNG">
 
 Major changes: 
 - You can't delete a person if he have an active sale.
@@ -31,7 +31,7 @@ Major changes:
 - Improvements to grid details
 
 V3: 
-<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/003_SalesGrid.PNG">
+<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotal/blob/master/ImagesFolder/003_SalesGrid.PNG">
 Minor changes:
 Delete a sale routine
 Improvements at home page
