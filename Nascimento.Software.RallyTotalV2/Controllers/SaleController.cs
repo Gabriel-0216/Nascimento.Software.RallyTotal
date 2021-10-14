@@ -88,32 +88,6 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         public IActionResult Create()
         {
             var saleViewModel = RetunViewModel();
-            //SaleViewModel saleViewModel = new SaleViewModel();
-            //var categories = new CategoryRepository().GetAll();
-            //var vendors = new PersonRepository().GetAll();
-            //var listaCategorias = new List<Category>();
-            //var listaPessoas = new List<Person>();
-
-            //foreach(var item in categories)
-            //{
-            //    listaCategorias.Add(new Category
-            //    {
-            //        CategoryId = item.CategoryId,
-            //        CategoryName = item.CategoryName
-            //    });
-            //}
-            //foreach(var item in vendors)
-            //{
-            //    listaPessoas.Add(new Person
-            //    {
-            //        PersonId = item.PersonId,
-            //        PersonName = item.PersonName,
-            //    });
-            //}
-
-            //saleViewModel.Categories = listaCategorias;
-            //saleViewModel.People = listaPessoas;
-
             return View(saleViewModel);
         }
 
