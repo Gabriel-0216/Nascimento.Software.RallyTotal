@@ -32,8 +32,10 @@ Major changes:
 
 V3: 
 <img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/003_SalesGrid.PNG">
-Delete a sale
-Improvements on home page
+Minor changes:
+Delete a sale routine
+Improvements at home page
+Improvements at Sales index
 Contact Us page
 
 
