@@ -13,9 +13,6 @@ Create a sale page, I used SummerNote plugin and a upload file technique that I 
 https://www.youtube.com/watch?v=7nFErqpxtbg&ab_channel=ASP.NETMVC 
 Follow him, this guy's great
 
-Grid with all sales available
-<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/002_SalesGrid.PNG">
-
 Also, before creating a sale you must create a car category and a person (Seller)
 
 ToDo: Sale -> Details/Delete/Edit
@@ -33,9 +30,16 @@ Major changes:
 - Details page
 - Improvements to grid details
 
+V3: 
+<img src="https://github.com/Gabriel-0216/Nascimento.Software.Projeto.RallyTotalV2/blob/master/ImagesFolder/003_SalesGrid.PNG">
+Delete a sale
+Improvements on home page
+Contact Us page
+
 
 ToDo:
-Sale -> Details/Edit
+Sale -> Edit
 Category -> Block a delete if any active sale use it
-Improvements on home page
+News Portal
+
 
