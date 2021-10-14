@@ -17,9 +17,9 @@
             
         <div style="background-color: azure; font-family: Helvetica">
             <a style="text-decoration: none; color: black" asp-action="Details" asp-route-id="@item.SaleId">
-                <!--Nome inicial--><h3 class="item_header"> @Html.DisplayFor(modelItem => item.SaleTitle)</h3>
+                <!--Nome inicial--><h4 class="item_header"> @Html.DisplayFor(modelItem => item.SaleTitle)</h4>
                 <!--Foto--><h4 class="item_content"><img src="~/images/@Model.photos.FirstOrDefault(m => m.PhotoId == item.Photo).PhotoName" class="box" height="150" width="260" asp-append-version="true" /></h4>
-                <h4 class="item_footer"> € @Html.DisplayFor(modelItem => item.Price)</h4>
+                <h5 class="item_footer"> € @Html.DisplayFor(modelItem => item.Price)</h5>
                
             </a>
 

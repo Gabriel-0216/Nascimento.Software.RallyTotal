@@ -167,46 +167,77 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         [HttpGet]
         public IActionResult Details(int? id)
         {
-            if (id == null)
+            var saleRepo = new SaleRepository().GetOne((int)id);
+            if (id == null || saleRepo == null)
             {
                 return NotFound();
             }
             else
             {
-                var saleRepo = new SaleRepository();
-                var sale = saleRepo.GetOne((int)id);
-                if (sale == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    var categoryRepo = new CategoryRepository();
-                    var category = categoryRepo.GetOne(sale.CategoryId);
+                 var categoryRepo = new CategoryRepository();
+                    var category = categoryRepo.GetOne(saleRepo.CategoryId);
                     var photoRepo = new PhotoRepository();
-                    var photo = photoRepo.GetOne(sale.Photo);
+                    var photo = photoRepo.GetOne(saleRepo.Photo);
                     var personRepo  = new PersonRepository();
-                    var person = personRepo.GetOne(sale.PersonID);
+                    var person = personRepo.GetOne(saleRepo.PersonID);
 
                     var saleModel = new SaleModelDetails()
                     {
-                        SaleId = sale.SaleId,
-                        SaleTitle = sale.SaleTitle,
-                        DescriptionSale = sale.DescriptionSale,
-                        Country = sale.Country,
-                        Price = sale.Price,
-                        RegisterDate = sale.RegisterDate.ToShortDateString(),
-                        UpdateDate = sale.UpdateDate.ToShortDateString(),
+                        SaleId = saleRepo.SaleId,
+                        SaleTitle = saleRepo.SaleTitle,
+                        DescriptionSale = saleRepo.DescriptionSale,
+                        Country = saleRepo.Country,
+                        Price = saleRepo.Price,
+                        RegisterDate = saleRepo.RegisterDate.ToShortDateString(),
+                        UpdateDate = saleRepo.UpdateDate.ToShortDateString(),
                         Photo = photo.PhotoName,
                         PersonSeller = person.PersonName,
                         CategoryName = category.CategoryName,
                     };
                     return View(saleModel);
-                }
+            }
 
+         
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            var saleRepo = new SaleRepository();
+            var sale = saleRepo.GetOne((int)id);
+            if (id == null || sale == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var saleModel = new SaleModel
+                {
+                    SaleId = sale.SaleId,
+                    SaleTitle = sale.SaleTitle,
+                    DescriptionSale = sale.DescriptionSale,
+                    RegisterDate = sale.RegisterDate,
+                    UpdateDate = sale.UpdateDate,
+                    CategoryId = sale.CategoryId,
+                    Country = sale.Country,
+                    PersonID = sale.PersonID,
+                    Price = sale.Price,
+                };
+
+                return View(saleModel);
             }
         }
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+                var saleRepo = new SaleRepository();
+                saleRepo.Delete(id);
+                return RedirectToAction(nameof(Index));
+        }
+
+     
+      
         private string UploadedFile(SaleModel model)
         {
             string uniqueFileName = null;

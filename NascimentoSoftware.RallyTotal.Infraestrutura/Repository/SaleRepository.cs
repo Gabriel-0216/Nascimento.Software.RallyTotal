@@ -65,7 +65,7 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             var rows = 0;
             var param = new DynamicParameters();
             param.Add("Id", id);
-            var query = $@"DELETE FROM SALE WHERE ID = @Id";
+            var query = $@"DELETE FROM SALE WHERE SaleId = @Id";
             using(var sql = new SqlConnection(GetConnection()))
             {
                 try

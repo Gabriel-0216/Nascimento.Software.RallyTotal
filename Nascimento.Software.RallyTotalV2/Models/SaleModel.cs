@@ -26,8 +26,8 @@ namespace Nascimento.Software.RallyTotal.WebApp.Models
         [Required(ErrorMessage = "You must inform the price")]
         public double Price { get; set; }
 
-        [Display(Name = "Vendor")]
-        [Required(ErrorMessage = "You must inform the Vendor")]
+        [Display(Name = "Seller")]
+        [Required(ErrorMessage = "You must inform the Seller")]
         public int PersonID { get; set; }
 
         [Display(Name = "Category")]

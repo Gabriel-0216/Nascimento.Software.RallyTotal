@@ -33,5 +33,17 @@ namespace Nascimento.Software.RallyTotalV2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        public IActionResult Contact()
+        {
+            
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
     }
 }
