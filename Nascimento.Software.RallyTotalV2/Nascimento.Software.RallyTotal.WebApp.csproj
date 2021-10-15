@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NascimentoSoftware.RallyTotal.Infraestrutura.Blog\NascimentoSoftware.RallyTotal.Infraestrutura.Blog.csproj" />
     <ProjectReference Include="..\NascimentoSoftware.RallyTotal.Infraestrutura\NascimentoSoftware.RallyTotal.Infraestrutura.csproj" />
   </ItemGroup>
 

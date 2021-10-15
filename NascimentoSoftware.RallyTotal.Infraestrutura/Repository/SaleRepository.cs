@@ -29,9 +29,8 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
 
             return exists;
         }
-        public int Add(Sale objeto)
+        public async Task <int> Add(Sale objeto)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"INSERT INTO SALE (SaleTitle, RegisterDate, UpdateDate, Country, Price, PersonId, CategoryId,
                 Photo, DescriptionSale) VALUES (@SaleTitle, @RegisterDate, @UpdateDate, @Country, @Price, @PersonId,
@@ -50,19 +49,18 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             {
                 try
                 {
-                    rows = sql.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-            return rows;
         }
 
-        public int Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            var rows = 0;
             var param = new DynamicParameters();
             param.Add("Id", id);
             var query = $@"DELETE FROM SALE WHERE SaleId = @Id";
@@ -70,14 +68,14 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             {
                 try
                 {
-                    rows = sql.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-            return rows;
         }
 
         public bool Exists(int id)
@@ -85,30 +83,26 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             throw new NotImplementedException();
         }
 
-        public List<Sale> GetAll()
+        public async Task<IEnumerable<Sale>> GetAll()
         {
-            var listaVendas = new List<Sale>();
             var query = $@"SELECT SaleTitle, SaleId, RegisterDate, UpdateDate, Country, Price, PersonId, CategoryId,
                 Photo, DescriptionSale FROM SALE";
             using(var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    listaVendas = sql.Query<Sale>(query, commandType: System.Data.CommandType.Text).ToList();
+                    var listaVendas = await sql.QueryAsync<Sale>(query, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return listaVendas;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-
-            return listaVendas;
-
         }
 
-        public Sale GetOne(int id)
+        public async Task<Sale> GetOne(int id)
         {
-            var sale = new Sale();
             var param = new DynamicParameters();
             var query = $@"SELECT SaleTitle, SaleId, RegisterDate, UpdateDate, Country, Price, PersonId, CategoryId,
                 Photo, DescriptionSale FROM SALE where SaleId = @Id";
@@ -117,20 +111,18 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             {
                 try
                 {
-                    sale = sql.Query<Sale>(query, param: param, commandType: System.Data.CommandType.Text).FirstOrDefault();
+                    var sale = await sql.QueryFirstOrDefaultAsync<Sale>(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return sale;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-
-            return sale;
         }
 
-        public int Update(Sale objeto)
+        public async Task<int> Update(Sale objeto)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"UPDATE SALE SET SaleTitle = @Title, UpdateDate = @UpdateDate, Country = @Country, Price = @Price, PersonId = @PersonId, CategoryId = @CategoryId,
                            Photo = @Photo, DescriptionSale = @Description WHERE SaleId = @Id";
@@ -148,15 +140,14 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             {
                 try
                 {
-                    rows = sql.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                        return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-
-            return rows;
         }
     }
 }

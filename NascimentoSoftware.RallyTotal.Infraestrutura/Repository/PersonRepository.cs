@@ -16,41 +16,40 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             var connection = $@"Server=DESKTOP-2L16HEL\SQLEXPRESS;Database=RallyWorld;Trusted_Connection=True;MultipleActiveResultSets=true";
             return connection;
         }
-        public int Add(Person objeto)
+        public async Task<int> Add(Person objeto)
         {
             var param = new DynamicParameters();
-            int rows = 0;
             var query = $@"INSERT INTO Person(PersonName, PhoneNumber, Country) VALUES (@PersonName, @PhoneNumber, @Country)";
             param.Add("PersonName", objeto.PersonName);
             param.Add("PhoneNumber", objeto.PhoneNumber);
             param.Add("Country", objeto.Country);
 
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-            return rows;
         }
 
-        public int Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"DELETE FROM Person WHERE PersonId = @Id";
             param.Add("Id", id);
 
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
@@ -58,7 +57,6 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
                 }
 
             }
-            return rows;
         }
 
         public bool Exists(int id)
@@ -66,66 +64,62 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             throw new NotImplementedException();
         }
 
-        public List<Person> GetAll()
+        public async Task<IEnumerable<Person>> GetAll()
         {
-            var lista = new List<Person>();
             var query = $@"SELECT PersonId, PersonName, PhoneNumber, Country FROM PERSON";
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    lista = connection.Query<Person>(query).ToList();
+                    var lista = await sql.QueryAsync<Person>(query, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return lista;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-            return lista;
         }
 
-        public Person GetOne(int id)
+        public async Task<Person> GetOne(int id)
         {
-            var pessoa = new Person();
             var param = new DynamicParameters();
             var query = $@"SELECT PersonId, PersonName, PhoneNumber, Country from PERSON WHERE PersonId = @Id";
             param.Add("Id", id);
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    pessoa = connection.Query<Person>(query, param: param, commandType: System.Data.CommandType.Text).FirstOrDefault();
+                    var pessoa = await sql.QueryFirstOrDefaultAsync<Person>(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return pessoa;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-            return pessoa;
         }
 
-        public int Update(Person objeto)
+        public async Task<int> Update(Person objeto)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"UPDATE Person SET PersonName = @Name, PhoneNumber = @Number, Country = @Country WHERE PersonId = @Id";
             param.Add("Id", objeto.PersonId);
             param.Add("Name", objeto.PersonName);
             param.Add("Number", objeto.PhoneNumber);
             param.Add("Country", objeto.Country);
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-
-            return rows;
         }
     }
 }

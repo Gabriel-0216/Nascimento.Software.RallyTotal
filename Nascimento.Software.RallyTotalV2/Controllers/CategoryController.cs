@@ -12,10 +12,10 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
     public class CategoryController : Controller
     {
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var repositorio = new CategoryRepository();
-            var lista = repositorio.GetAll();
+            var lista = await repositorio.GetAll();
             var Category = new List<Category>();
             foreach (var item in lista)
             {
@@ -40,7 +40,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     RegisterDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                 };
-                repositorio.Add(categoria);
+                await repositorio.Add(categoria);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -59,7 +59,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
         [HttpGet]
        
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -67,7 +67,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             }
             else
             {
-                var categoria = new CategoryRepository().GetOne((int)id);
+                var categoria = await new CategoryRepository().GetOne((int)id);
                 if (categoria == null)
                 {
                     return NotFound();
@@ -89,7 +89,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         [HttpPost]
      
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category categoria)
+        public  async Task<IActionResult> Edit(Category categoria)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     CategoryName = categoria.CategoryName,
                     UpdateDate = DateTime.Now
                 };
-                repositorio.Update(cate);
+                await repositorio.Update(cate);
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -110,9 +110,9 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var categoria = new CategoryRepository().GetOne((int)id);
+            var categoria = await new CategoryRepository().GetOne((int)id);
             if (categoria == null)
             {
                 return NotFound();
@@ -133,7 +133,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
     
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -141,7 +141,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             }
             else
             {
-                var repo = new CategoryRepository().GetOne((int)id);
+                var repo = await new CategoryRepository().GetOne((int)id);
                 if (repo == null)
                 {
                     return NotFound();
@@ -162,11 +162,11 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = new CategoryRepository().GetOne((int)id);
+            var category = await new CategoryRepository().GetOne((int)id);
             var repo = new CategoryRepository();
-            repo.Delete(category.CategoryId);
+            await repo.Delete(category.CategoryId);
             return RedirectToAction(nameof(Index));
         }
     }

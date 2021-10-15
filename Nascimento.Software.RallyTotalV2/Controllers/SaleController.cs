@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Nascimento.Software.RallyTotal.WebApp.Models;
 using NascimentoSoftware.RallyTotal.Infraestrutura.Repository;
@@ -17,12 +17,12 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         {
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var repositorio = new SaleRepository().GetAll();
-            var categories = new CategoryRepository().GetAll();
-            var persons = new PersonRepository().GetAll();
-            var photos = new PhotoRepository().GetAll();
+            var repositorio = await new SaleRepository().GetAll();
+            var categories = await new CategoryRepository().GetAll();
+            var persons = await new PersonRepository().GetAll();
+            var photos = await new PhotoRepository().GetAll();
             var listaCategorias = new List<Category>();
             var listaSales = new List<Sale>();
             var listaPessoas = new List<Person>();
@@ -85,20 +85,20 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var saleViewModel = RetunViewModel();
-            return View(saleViewModel);
+            return View(await RetunViewModel());
         }
 
-        public SaleViewModel RetunViewModel()
+        public async Task<SaleViewModel> RetunViewModel()
         {
             SaleViewModel saleViewModel = new SaleViewModel();
-            var categories = new CategoryRepository().GetAll();
-            var vendors = new PersonRepository().GetAll();
+            var categories = await new  CategoryRepository().GetAll();
+            var vendors = await new PersonRepository().GetAll();
             var listaCategorias = new List<Category>();
             var listaPessoas = new List<Person>();
 
+           
             foreach (var item in categories)
             {
                 listaCategorias.Add(new Category
@@ -123,7 +123,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(SaleModel model)
+        public async Task<IActionResult> Create(SaleModel model)
         {
             if (ModelState.IsValid)
             {
@@ -149,7 +149,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                 {
                     PhotoName = uniqueFileName,
                 };
-                photoRepo.Add(photoInfra);
+                await photoRepo.Add(photoInfra);
                 var id = photoRepo.SearchFileName(uniqueFileName);
                 var sale = new NascimentoSoftware.RallyTotal.Infraestrutura.Models.Sale()
                 {
@@ -163,16 +163,16 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     Photo = id,
                     DescriptionSale = model.DescriptionSale
                 };
-                repo.Add(sale);
+               await repo.Add(sale);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
-            var saleRepo = new SaleRepository().GetOne((int)id);
+            var saleRepo = await new SaleRepository().GetOne((int)id);
             if (id == null || saleRepo == null)
             {
                 return NotFound();
@@ -180,11 +180,11 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             else
             {
                  var categoryRepo = new CategoryRepository();
-                    var category = categoryRepo.GetOne(saleRepo.CategoryId);
+                    var category = await categoryRepo.GetOne(saleRepo.CategoryId);
                     var photoRepo = new PhotoRepository();
-                    var photo = photoRepo.GetOne(saleRepo.Photo);
+                    var photo = await photoRepo.GetOne(saleRepo.Photo);
                     var personRepo  = new PersonRepository();
-                    var person = personRepo.GetOne(saleRepo.PersonID);
+                    var person = await personRepo.GetOne(saleRepo.PersonID);
 
                     var saleModel = new SaleModelDetails()
                     {
@@ -206,10 +206,10 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var saleRepo = new SaleRepository();
-            var sale = saleRepo.GetOne((int)id);
+            var sale = await saleRepo.GetOne((int)id);
             if (id == null || sale == null)
             {
                 return NotFound();
@@ -234,25 +234,25 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
                 var saleRepo = new SaleRepository();
-                saleRepo.Delete(id);
+                await saleRepo.Delete(id);
                 return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             var saleRepo = new SaleRepository();
-            var sale = saleRepo.GetOne((int)id);
+            var sale = await saleRepo.GetOne((int)id);
             if (id == null || sale == null)
             {
                 return NotFound();
             }
             else
             {
-                var saleViewModel = RetunViewModel();
+                var saleViewModel = await RetunViewModel();
                 saleViewModel.CategoryId = sale.CategoryId;
                 saleViewModel.PersonID = sale.PersonID;
                 saleViewModel.Price = sale.Price;
@@ -269,7 +269,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(SaleModel model)
+        public async Task<IActionResult> Edit(SaleModel model)
         {
             if (ModelState.IsValid)
             {
@@ -294,7 +294,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                 {
                     PhotoName = uniqueFileName,
                 };
-                photoRepo.Add(photoInfra);
+                await photoRepo.Add(photoInfra);
                 var id = photoRepo.SearchFileName(uniqueFileName);
                 var sale = new NascimentoSoftware.RallyTotal.Infraestrutura.Models.Sale()
                 {
@@ -309,7 +309,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     Photo = id,
                     DescriptionSale = model.DescriptionSale
                 };
-                saleRepo.Update(sale);
+                await saleRepo.Update(sale);
                 return RedirectToAction(nameof(Index));
             }
             return View();

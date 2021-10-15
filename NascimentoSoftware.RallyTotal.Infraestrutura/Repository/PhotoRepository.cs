@@ -34,49 +34,45 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
                 }
             }
         }
-        public int Add(Photo objeto)
+        public async Task<int> Add(Photo objeto)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"INSERT INTO Photo(Title, PhotoName) VALUES (@Title, @Name)";
             param.Add("Title", "imagem");
             param.Add("Name", objeto.PhotoName);
 
-            using(var connection = new SqlConnection(GetConnection()))
+            using(var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows =  await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-
-            return rows;
         }
 
-        public int Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            int rows = 0;
             var param = new DynamicParameters();
             var query = $@"DELETE FROM Photo WHERE PhotoId = @Id";
             param.Add("Id", id);
 
-            using(var connection = new SqlConnection(GetConnection()))
+            using(var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-
-            return rows;
         }
 
         public bool Exists(int id)
@@ -84,67 +80,63 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
             throw new NotImplementedException();
         }
 
-        public List<Photo> GetAll()
+        public async Task<IEnumerable<Photo>> GetAll()
         {
-            var lista = new List<Photo>();
             var query = $@"SELECT PhotoId, Title, PhotoName FROM PHOTO";
-            using(var connection = new SqlConnection(GetConnection()))
+            using(var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    lista = connection.Query<Photo>(query, commandType: System.Data.CommandType.Text).ToList();
+                    var lista = await sql.QueryAsync<Photo>(query, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return lista;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-            return lista;
         }
 
-        public Photo GetOne(int id)
+        public async Task<Photo> GetOne(int id)
         {
-            var Photo = new Photo();
             var param = new DynamicParameters();
             var query = $@"SELECT PhotoId, Title, PhotoName FROM PHOTO where PhotoId = @Id";
             param.Add("Id", id);
 
-            using (var connection = new SqlConnection(GetConnection()))
+            using (var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    Photo = connection.Query<Photo>(query, param: param, commandType: System.Data.CommandType.Text).FirstOrDefault();
+                    var Photo = await sql.QueryFirstOrDefaultAsync<Photo>(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return Photo;
                 }
                 catch (Exception)
                 {
                     return null;
                 }
             }
-            return Photo;
         }
 
-        public int Update(Photo objeto)
+        public async Task<int> Update(Photo objeto)
         {
-            var rows = 0;
             var param = new DynamicParameters();
             var query = $@"UPDATE Photo SET Title = @Title, PhotoName = @Name WHERE PhotoId = @Id";
             param.Add("Id", objeto.PhotoId);
             param.Add("Title", objeto.Title);
             param.Add("PhotoName", objeto.PhotoName);
 
-            using(var connection = new SqlConnection(GetConnection()))
+            using(var sql = new SqlConnection(GetConnection()))
             {
                 try
                 {
-                    rows = connection.Execute(query, param: param, commandType: System.Data.CommandType.Text);
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
                 }
                 catch (Exception)
                 {
                     return 0;
                 }
             }
-
-            return rows;
         }
     }
 }

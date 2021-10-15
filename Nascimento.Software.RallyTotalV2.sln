@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nascimento.Software.RallyTotal.WebApp", "Nascimento.Software.RallyTotalV2\Nascimento.Software.RallyTotal.WebApp.csproj", "{3065A393-B4B0-4E4F-92DA-F5526B221224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nascimento.Software.RallyTotal.WebApp", "Nascimento.Software.RallyTotalV2\Nascimento.Software.RallyTotal.WebApp.csproj", "{3065A393-B4B0-4E4F-92DA-F5526B221224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascimentoSoftware.RallyTotal.Infraestrutura", "NascimentoSoftware.RallyTotal.Infraestrutura\NascimentoSoftware.RallyTotal.Infraestrutura.csproj", "{4635653A-D099-447B-BAB7-B9F23F2E8F60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NascimentoSoftware.RallyTotal.Infraestrutura", "NascimentoSoftware.RallyTotal.Infraestrutura\NascimentoSoftware.RallyTotal.Infraestrutura.csproj", "{4635653A-D099-447B-BAB7-B9F23F2E8F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NascimentoSoftware.RallyTotal.Infraestrutura.Blog", "NascimentoSoftware.RallyTotal.Infraestrutura.Blog\NascimentoSoftware.RallyTotal.Infraestrutura.Blog.csproj", "{7C2CA612-9871-470F-A537-4154A8952AEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4635653A-D099-447B-BAB7-B9F23F2E8F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4635653A-D099-447B-BAB7-B9F23F2E8F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4635653A-D099-447B-BAB7-B9F23F2E8F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2CA612-9871-470F-A537-4154A8952AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2CA612-9871-470F-A537-4154A8952AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2CA612-9871-470F-A537-4154A8952AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2CA612-9871-470F-A537-4154A8952AEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

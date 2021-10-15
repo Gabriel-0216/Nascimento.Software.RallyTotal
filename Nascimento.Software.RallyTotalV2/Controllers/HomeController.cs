@@ -35,15 +35,11 @@ namespace Nascimento.Software.RallyTotalV2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Contact()
-        {
-            
-            return View();
-        }
+        public IActionResult Contact() => View();
+
         [HttpGet]
-        public IActionResult AboutUs()
-        {
-            return View();
-        }
+        public IActionResult AboutUs() => View();
+
+     
     }
 }

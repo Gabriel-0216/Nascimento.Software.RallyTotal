@@ -12,10 +12,10 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
     public class PersonController : Controller
     {
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var repo = new PersonRepository();
-            var lista = repo.GetAll();
+            var lista = await repo .GetAll();
             var personList = new List<Person>();
             foreach (var item in lista)
             {
@@ -32,7 +32,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task <IActionResult> Create()
         {
             return View();
         }
@@ -41,7 +41,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Person model)
+        public async Task<IActionResult> Create(Person model)
         {
             if (ModelState.IsValid)
             {
@@ -53,14 +53,14 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     Country = model.Country,
 
                 };
-                repo.Add(person);
+                await repo.Add(person);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if(id == null)
             {
@@ -69,7 +69,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             else
             {
                 
-                var repo = new PersonRepository().GetOne((int)id);
+                var repo = await new PersonRepository().GetOne((int)id);
                 if (repo == null)
                 {
                     return NotFound();
@@ -89,7 +89,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Person model)
+        public async Task<IActionResult> Edit(Person model)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
                     PhoneNumber = model.PhoneNumber,
                     Country = model.Country,
                 };
-                repo.Update(person);
+                await repo.Update(person);
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -109,21 +109,16 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var saleRepo = new SaleRepository();
-            if (id == null)
+            if (id == null || saleRepo.SellerExists((int)id) >= 1)
             {
-                return NotFound();
-            }
-            else if(saleRepo.SellerExists((int)id) >= 1)
-            {
-             
                 return NotFound();
             }
             else
             {
-                var repo = new PersonRepository().GetOne((int)id);
+                var repo = await new PersonRepository().GetOne((int)id);
                 if (repo == null)
                 {
                     return NotFound();
@@ -143,16 +138,16 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var repository = new PersonRepository();
-            repository.Delete(id);
+            await repository.Delete(id);
             return RedirectToAction(nameof(Index));
            
         }
 
         [HttpGet]
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -160,7 +155,7 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
             }
             else
             {
-                var repo = new PersonRepository().GetOne((int)id);
+                var repo = await new PersonRepository().GetOne((int)id);
                 var person = new Person
                 {
                     PersonId = repo.PersonId,
@@ -173,8 +168,4 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
     }
-            
-            
-
-
 }
