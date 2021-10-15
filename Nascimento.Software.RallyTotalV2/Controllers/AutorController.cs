@@ -14,13 +14,24 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var autorRepo = new AutorRepository();
-            return View(await autorRepo.GetAll());
+            var lista = await autorRepo.GetAll();
+            var autorList = new List<Autor>();
+            foreach(var item in lista)
+            {
+                autorList.Add(new Autor
+                {
+                    Id = item.Id,
+                    Nome = item.Nome,
+                });
+            }
+            return View(autorList);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create() => View();
+        public IActionResult Create() => View();
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Autor model)
         {
             if (ModelState.IsValid)

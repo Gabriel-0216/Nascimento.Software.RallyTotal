@@ -29,6 +29,19 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Repository
 
             return exists;
         }
+
+        public int CategoryExists(int CategoryId)
+        {
+            int exists = 0;
+            var param = new DynamicParameters();
+            var query = $@"SELECT COUNT(CategoryId) FROM SALE WHERE CategoryId = @CategoryId";
+            param.Add("CategoryId", CategoryId);
+            using(var sql = new SqlConnection(GetConnection()))
+            {
+                exists = (int)sql.ExecuteScalar(query, param: param, commandType: System.Data.CommandType.Text);
+                return exists;
+            }
+        }
         public async Task <int> Add(Sale objeto)
         {
             var param = new DynamicParameters();

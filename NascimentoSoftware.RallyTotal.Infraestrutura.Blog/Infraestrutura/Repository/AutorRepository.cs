@@ -15,7 +15,7 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Blog.Infraestrutura.Repos
         {
             using (var sql = new SqlConnection(GetConnection()))
             {
-                var query = $@"SELECT * FROM Autor";
+                var query = $@"SELECT TOP 10 Id, NOME FROM AUTOR ORDER BY Id DESC";
                 var autores = await sql.QueryAsync<Autor>(query).ConfigureAwait(false);
                 return autores;
             }
@@ -26,7 +26,7 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Blog.Infraestrutura.Repos
             var param = new DynamicParameters();
             param.Add("Nome", objeto.Nome);
 
-            var query = $@"INSERT INTO Autor (Nome) VALUES @Nome";
+            var query = $@"INSERT INTO Autor (Nome) VALUES (@Nome)";
             try
             {
                 using(var sql = new SqlConnection(GetConnection()))
@@ -43,7 +43,21 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Blog.Infraestrutura.Repos
 
         public async Task<int> Delete(int id)
         {
-            throw new NotImplementedException();
+            var param = new DynamicParameters();
+            param.Add("Id", id);
+            try
+            {
+                using(var sql = new SqlConnection(GetConnection()))
+                {
+                    var query = $@"DELETE FROM Autor WHERE Id = @Id";
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text).ConfigureAwait(false);
+                    return rows;
+                }
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
         }
 
        
@@ -56,12 +70,40 @@ namespace NascimentoSoftware.RallyTotal.Infraestrutura.Blog.Infraestrutura.Repos
 
         public async Task<Autor> GetOne(int id)
         {
-            throw new NotImplementedException();
+            var param = new DynamicParameters();
+            param.Add("Id", id);
+            try
+            {
+                using(var sql = new SqlConnection(GetConnection()))
+                {
+                    var query = $@"SELECT Id, Nome FROM Autor WHERE Id = @Id";
+                    var autor = await sql.QueryFirstOrDefaultAsync<Autor>(query, param: param, commandType: System.Data.CommandType.Text);
+                    return autor;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<int> Update(Autor objeto)
         {
-            throw new NotImplementedException();
+            var param = new DynamicParameters();
+            param.Add("Nome", objeto.Nome);
+            try
+            {
+                var query = $@"UPDATE AUTOR SET Nome = @Nome WHERE Id = @Id";
+                using(var sql = new SqlConnection(GetConnection()))
+                {
+                    var rows = await sql.ExecuteAsync(query, param: param, commandType: System.Data.CommandType.Text);
+                    return rows;
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
     }
 }

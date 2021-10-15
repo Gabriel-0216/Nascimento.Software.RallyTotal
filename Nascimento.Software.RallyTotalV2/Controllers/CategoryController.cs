@@ -131,32 +131,25 @@ namespace Nascimento.Software.RallyTotal.WebApp.Controllers
         }
 
 
-    
+
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var categoryRepo = await new CategoryRepository().GetOne((int)id);
+            if (id == null || categoryRepo == null || new SaleRepository().CategoryExists((int)id) >= 1)
             {
                 return NotFound();
             }
             else
             {
-                var repo = await new CategoryRepository().GetOne((int)id);
-                if (repo == null)
+                var category = new Category()
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    var category = new Category()
-                    {
-                        CategoryId = repo.CategoryId,
-                        CategoryName = repo.CategoryName,
-                        RegisterDate = repo.RegisterDate,
-                        UpdateDate = repo.UpdateDate,
-                    };
-                    return View(category);
-                }
+                    CategoryId = categoryRepo.CategoryId,
+                    CategoryName = categoryRepo.CategoryName,
+                    RegisterDate = categoryRepo.RegisterDate,
+                    UpdateDate = categoryRepo.UpdateDate,
+                };
+                return View(category);
             }
         }
 

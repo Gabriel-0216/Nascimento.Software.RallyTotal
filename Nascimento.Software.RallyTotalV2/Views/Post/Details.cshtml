@@ -1,0 +1,22 @@
+﻿@model Nascimento.Software.RallyTotal.WebApp.Models.Blog.ViewModel.PostViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <hr />
+    <div style="min-height: 900px">
+        <div class="text-center">
+            <h1 class="display-4"> @Html.DisplayFor(model => model.Assunto)</h1>
+            <p>@Html.Raw(Model.Texto)</p>
+
+        </div>
+
+    </div>
+
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id } ) |  
+    <a asp-action="Index">Back to List</a>
+</div>
