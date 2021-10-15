@@ -26,22 +26,27 @@ Details page
 <img src="https://github.com/Gabriel-0216/Nascimento.Software.RallyTotal/blob/master/ImagesFolder/003_Details.PNG">
 
 Major changes: 
-- You can't delete a person if he have an active sale.
-- Details page
-- Improvements to grid details
+- You can't delete a person if he have an active sale; 
+- Details page; 
+- Improvements to grid details; 
 
 V3: 
 <img src="https://github.com/Gabriel-0216/Nascimento.Software.RallyTotal/blob/master/ImagesFolder/003_SalesGrid.PNG">
-Minor changes:
-Delete a sale routine
-Improvements at home page
-Improvements at Sales index
-Contact Us page
+Minor changes: 
+Delete a sale routine; 
+Improvements at home page; 
+Improvements at Sales index; 
+Contact Us page; 
 
+14/10/2021: 
+Sale edit working;
+<b>THINK ASYNC!;</b>
+Controllers and repositories working with async programming;
+Author entity, controller, pages created;
 
 ToDo:
-Sale -> Edit
-Category -> Block a delete if any active sale use it
-News Portal
 
+Category Controller -> Block a delete if any active sale use it; </br>
+Database scripts for Authors table; </br>
+News Portal </br>
 
