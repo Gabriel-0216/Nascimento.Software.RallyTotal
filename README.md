@@ -39,10 +39,10 @@ Improvements at Sales index
 Contact Us page
 
 14/10/2021: 
-Sale edit working
-<b>THINK ASYNC!</b>
-Controllers and repositories working with async programming.
-Author entity, controller, pages created. 
+Sale edit working;
+<b>THINK ASYNC!;</b>
+Controllers and repositories working with async programming;
+Author entity, controller, pages created;
 
 ToDo:
 
