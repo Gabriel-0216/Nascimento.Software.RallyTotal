@@ -38,10 +38,15 @@ Improvements at home page
 Improvements at Sales index
 Contact Us page
 
+14/10/2021: 
+Sale edit working
+<b>THINK ASYNC!</b>
+Controllers and repositories working with async programming.
+Author entity, controller, pages created. 
 
 ToDo:
-Sale -> Edit
-Category -> Block a delete if any active sale use it
-News Portal
 
+Category Controller -> Block a delete if any active sale use it; </br>
+Database scripts for Authors table; </br>
+News Portal </br>
 
